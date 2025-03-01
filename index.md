@@ -5,6 +5,8 @@ A Python-based app that fetches real-time weather data using the OpenWeatherMap 
 ## 🚀 Features
 - Fetches live weather data for any city
 - Displays temperature, humidity, and weather conditions
+- Provides a **5-day weather forecast**
+- Includes **graphical weather trends**
 - Simple **CLI-based** and **Streamlit Web UI**
 
 ---
@@ -26,6 +28,7 @@ pip install -r requirements.txt
 requests
 streamlit
 flask
+matplotlib
 ```
 
 ---
@@ -56,6 +59,46 @@ Use the input field to enter a city name and fetch weather data.
 
 ---
 
+## 🌤 5-Day Weather Forecast
+The app now fetches and displays a **5-day weather forecast**, including:
+- Daily temperature trends
+- Humidity levels
+- Weather conditions
+
+### **Example API Call for Forecast Data**
+```python
+BASE_FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast"
+def get_5day_forecast(city):
+    params = {"q": city, "appid": API_KEY, "units": "metric"}
+    response = requests.get(BASE_FORECAST_URL, params=params)
+    if response.status_code == 200:
+        return response.json()
+    return {"error": "City not found!"}
+```
+
+---
+
+## 📈 Graphical Weather Trends
+The app now includes **visual graphs** to display:
+- **Temperature trends over 5 days**
+- **Humidity variations**
+
+### **Example Graph Using Matplotlib**
+```python
+import matplotlib.pyplot as plt
+def plot_weather_trends(forecast_data):
+    dates = [item['dt_txt'] for item in forecast_data['list'][:5]]
+    temps = [item['main']['temp'] for item in forecast_data['list'][:5]]
+    plt.plot(dates, temps, marker='o', linestyle='-', color='b')
+    plt.xlabel('Date')
+    plt.ylabel('Temperature (°C)')
+    plt.title('5-Day Temperature Trend')
+    plt.xticks(rotation=45)
+    plt.show()
+```
+
+---
+
 ## 🧪 Running Tests
 To ensure the weather API integration works correctly, run:
 ```bash
@@ -68,9 +111,8 @@ python -m unittest discover tests
 Feel free to fork this repository and submit **pull requests** to improve the project!
 
 ### 🔥 Future Enhancements
-- Display **5-day weather forecast**
-- Add **graphical weather trends**
 - Support for **multiple weather APIs**
+- Implement **real-time weather alerts**
 
 ---
 
