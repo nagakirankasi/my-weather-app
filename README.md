@@ -63,6 +63,11 @@ python -m unittest discover tests
 ```
 
 ---
+## Short Demo
+![demo](my-weather-app-demo.webp)
+
+---
+
 
 ## 📢 Contributing
 Feel free to fork this repository and submit **pull requests** to improve the project!
